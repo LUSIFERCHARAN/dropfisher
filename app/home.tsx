@@ -1,13 +1,13 @@
 import { useRouter } from "expo-router";
-import { 
-  View, 
-  Text, 
-  Image, 
-  TouchableOpacity, 
-  StyleSheet, 
-  FlatList, 
-  TouchableWithoutFeedback, 
-  SafeAreaView 
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  StyleSheet,
+  FlatList,
+  TouchableWithoutFeedback,
+  SafeAreaView,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Video } from "expo-av";
@@ -42,7 +42,7 @@ export default function Home() {
         <View style={styles.promoContainer}>
           <TouchableWithoutFeedback onPress={() => {}}>
             <Video
-              source={require("../assets/video.mp4")}
+              source={require("../assets/4video.mp4")}
               style={styles.promoVideo}
               shouldPlay
               isLooping
@@ -56,8 +56,8 @@ export default function Home() {
           numColumns={3}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
-            <TouchableOpacity 
-              style={styles.categoryItem} 
+            <TouchableOpacity
+              style={styles.categoryItem}
               onPress={() => {
                 if (item.name === "Fish") {
                   router.push("/fish/fishList");
@@ -68,15 +68,21 @@ export default function Home() {
                 }
               }}
             >
-              {item.image && <Image source={item.image} style={styles.categoryImage} />}
+              {item.image && (
+                <Image source={item.image} style={styles.categoryImage} />
+              )}
               <Text style={styles.categoryText}>{item.name}</Text>
             </TouchableOpacity>
           )}
         />
 
-        {/* Custom Order Section */}
-        <TouchableOpacity style={styles.customOrder}>
-          <Text style={styles.customText}>Compose Your Own Meal</Text>
+        {/* Fresh Catch Section */}
+        <TouchableOpacity
+          style={styles.freshCatch}
+          onPress={() => router.push("/freshcatch")}
+        >
+          <Ionicons name="fish" size={24} color="#fff" />
+          <Text style={styles.freshText}>Today's Fresh Catch</Text>
         </TouchableOpacity>
 
         {/* Bottom Navigation */}
@@ -102,15 +108,62 @@ export default function Home() {
 const styles = StyleSheet.create({
   safeContainer: { flex: 1, backgroundColor: "#fff5f5" },
   container: { flex: 1, padding: 20 },
-  header: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginBottom: 50 },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 50,
+  },
   title: { fontSize: 25, fontWeight: "bold", color: "#ff4d4d" },
   promoContainer: { alignItems: "center", marginBottom: 40 },
   promoVideo: { width: "100%", height: 200, borderRadius: 15 },
-  categoryItem: { flex: 1, alignItems: "center", padding: 12, margin: 5, borderWidth: 1.5, borderColor: "#ff4d4d", borderRadius: 12, backgroundColor: "#fff", width: "30%", aspectRatio: 1, justifyContent: "center" },
-  categoryImage: { width: 80, height: 70, borderRadius: 12, marginBottom: 8, resizeMode: "contain" },
-  categoryText: { color: "#ff4d4d", fontSize: 15, fontWeight: "bold", textAlign: "center" },
-  customOrder: { backgroundColor: "#ff4d4d", padding: 15, borderRadius: 12, alignItems: "center", marginVertical: 20 },
-  customText: { color: "#fff", fontSize: 16, fontWeight: "bold" },
-  bottomNav: { flexDirection: "row", justifyContent: "space-around", paddingVertical: 5, borderTopWidth: 1, borderColor: "#ddd" },
+  categoryItem: {
+    flex: 1,
+    alignItems: "center",
+    padding: 12,
+    margin: 5,
+    borderWidth: 1.5,
+    borderColor: "#ff4d4d",
+    borderRadius: 12,
+    backgroundColor: "#fff",
+    width: "30%",
+    aspectRatio: 1,
+    justifyContent: "center",
+  },
+  categoryImage: {
+    width: 80,
+    height: 70,
+    borderRadius: 12,
+    marginBottom: 8,
+    resizeMode: "contain",
+  },
+  categoryText: {
+    color: "#ff4d4d",
+    fontSize: 15,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  freshCatch: {
+    backgroundColor: "#00b894",
+    padding: 15,
+    borderRadius: 12,
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "center",
+    gap: 10,
+    marginTop: 10,
+  },
+  freshText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  bottomNav: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    paddingVertical: 5,
+    borderTopWidth: 1,
+    borderColor: "#ddd",
+    marginTop: 15,
+  },
 });
-
