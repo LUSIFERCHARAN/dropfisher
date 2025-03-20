@@ -30,13 +30,14 @@ export default function FishList() {
       {/* Fish List */}
       <FlatList
         data={fishes}
-        numColumns={2} // 2 items in a row
+        numColumns={2}
         keyExtractor={(item) => item.id}
         columnWrapperStyle={styles.row}
         contentContainerStyle={{ paddingBottom: 20 }}
         renderItem={({ item }) => (
           <TouchableOpacity 
-            style={styles.fishItem} 
+            style={styles.fishItem}
+            onPress={() => router.push(`/fish/${item.id}`)}
           >
             <Image source={item.image} style={styles.fishImage} />
             <Text style={styles.fishText}>{item.name}</Text>
@@ -70,8 +71,8 @@ const styles = StyleSheet.create({
     marginBottom: 15, 
   },
   fishItem: { 
-    width: "48%", // Makes the box square while keeping spacing
-    aspectRatio: 1, // Ensures it's a square
+    width: "48%", 
+    aspectRatio: 1, 
     backgroundColor: "#fff", 
     borderRadius: 15, 
     borderWidth: 2, 
@@ -85,7 +86,7 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   fishImage: { 
-    width: "100%", // Adjusted for square box
+    width: "100%", 
     height: "70%", 
     resizeMode: "contain", 
   },

@@ -8,7 +8,9 @@ import {
   FlatList,
   TouchableWithoutFeedback,
   SafeAreaView,
+  Alert,
 } from "react-native";
+import * as Location from "expo-location";
 import { Ionicons } from "@expo/vector-icons";
 import { Video } from "expo-av";
 
@@ -24,13 +26,52 @@ export default function Home() {
     { id: "6", name: "Squid", image: require("../assets/squid.png") },
   ];
 
+  const handleLocationCheck = async () => {
+    try {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        Alert.alert("Permission Denied", "Location permission is required.");
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      let reverseGeocode = await Location.reverseGeocodeAsync(location.coords);
+
+      let rawPlace = reverseGeocode[0];
+      let place =
+        rawPlace?.city ||
+        rawPlace?.district ||
+        rawPlace?.subregion ||
+        rawPlace?.region ||
+        rawPlace?.name ||
+        "";
+
+      place = place.trim();
+
+      console.log("📌 Detected Location:", place);
+
+      const availableZones = ["Chennai", "Tambaram", "Velachery"];
+
+      if (place && availableZones.includes(place)) {
+        Alert.alert("✅ Delivery Available", `We deliver to ${place}! 🎉`);
+      } else if (place) {
+        Alert.alert("⛔ Not Available", `Sorry, we don't deliver to ${place} yet.`);
+      } else {
+        Alert.alert("⚠️ Location Not Found", "Unable to determine your city.");
+      }
+    } catch (error) {
+      console.log("Location error:", error);
+      Alert.alert("Error", "Could not detect location.");
+    }
+  };
+
   return (
     <SafeAreaView style={styles.safeContainer}>
       <View style={styles.container}>
         {/* Header */}
         <View style={styles.header}>
-          <TouchableOpacity>
-            <Ionicons name="menu-outline" size={30} color="#ff4d4d" />
+          <TouchableOpacity onPress={handleLocationCheck}>
+            <Ionicons name="location-outline" size={30} color="#ff4d4d" />
           </TouchableOpacity>
           <Text style={styles.title}>DropFisher</Text>
           <TouchableOpacity onPress={() => router.push("/profile")}>
@@ -46,6 +87,7 @@ export default function Home() {
               style={styles.promoVideo}
               shouldPlay
               isLooping
+              
             />
           </TouchableWithoutFeedback>
         </View>
