@@ -2,30 +2,29 @@ import { useRouter } from "expo-router";
 import { View, Text, Image, TouchableOpacity, StyleSheet, FlatList } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-export default function ShrimpList() {
+export default function CrabList() {
   const router = useRouter();
 
-  const shrimps = [
-    { id: "shrimp-1", name: "WHITE PRAWN", image: require("../../assets/whiteprawn.png") },
-    { id: "shrimp-2", name: "ORANGE PRAWN", image: require("../../assets/orangeprawn.png") },
-    { id: "shrimp-3", name: "TIGER PRAWN", image: require("../../assets/tigerprawn.png") },
-    { id: "shrimp-4", name: "GREEN PRAWN", image: require("../../assets/greenprawn.png") },
+  const crabs = [
+    { id: "crab-1", name: "GREEN CRAB", image: require("../../assets/greencrab.png") },
+    { id: "crab-2", name: "BLUE CRAB", image: require("../../assets/bluecrab.png") },
+    { id: "crab-3", name: "ORANGE CRAB", image: require("../../assets/orangecrab.png") },
   ];
-  
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()}>
           <Ionicons name="arrow-back" size={30} color="#ff4d4d" />
         </TouchableOpacity>
-        <Text style={styles.title}>Select Your Shrimp</Text>
+        <Text style={styles.title}>Select Your Crab</Text>
         <TouchableOpacity onPress={() => router.push("/cart")}>
           <Ionicons name="cart-outline" size={30} color="#ff4d4d" />
         </TouchableOpacity>
       </View>
 
       <FlatList
-        data={shrimps}
+        data={crabs}
         numColumns={2}
         keyExtractor={(item) => item.id}
         columnWrapperStyle={styles.row}
@@ -43,7 +42,6 @@ export default function ShrimpList() {
     </View>
   );
 }
-
 
 const styles = StyleSheet.create({
   container: { 
@@ -68,8 +66,8 @@ const styles = StyleSheet.create({
     marginBottom: 15, 
   },
   fishItem: { 
-    width: "48%", // Makes the box square while keeping spacing
-    aspectRatio: 1, // Ensures it's a square
+    width: "48%",
+    aspectRatio: 1,
     backgroundColor: "#fff", 
     borderRadius: 15, 
     borderWidth: 2, 
@@ -83,7 +81,7 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   fishImage: { 
-    width: "100%", // Adjusted for square box
+    width: "100%", 
     height: "70%", 
     resizeMode: "contain", 
   },

@@ -105,8 +105,8 @@ export default function Home() {
                   router.push("/fish/fishList");
                 } else if (item.name === "Shrimp") {
                   router.push("/fish/shrimplist");
-                } else {
-                  router.push("/fish/fishList");
+                } else if (item.name === "Crab"){
+                  router.push("/fish/crablist");
                 }
               }}
             >

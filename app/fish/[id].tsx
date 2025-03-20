@@ -11,19 +11,33 @@ import {
   import { Ionicons, Feather, AntDesign } from "@expo/vector-icons";
   import { LinearGradient } from "expo-linear-gradient";
   
-  const fishData = {
-    "1": { name: "VANJARAM", image: require("../../assets/vanjaram.png"), pricePerKg: 850 },
-    "2": { name: "SHELLA", image: require("../../assets/bar.png"), pricePerKg: 480 },
-    "3": { name: "KARUPU VAVVAL", image: require("../../assets/black-promfet.png"), pricePerKg: 520 },
-    "4": { name: "VELLAI VAVAAL", image: require("../../assets/wpomfret.png"), pricePerKg: 560 },
-    "5": { name: "SUURAI", image: require("../../assets/tuna.png"), pricePerKg: 420 },
-    "6": { name: "PAARAI", image: require("../../assets/parai.png"), pricePerKg: 500 },
-  };
+ const allData = {
+  // Fish
+  "1": { name: "VANJARAM", image: require("../../assets/vanjaram.png"), pricePerKg: 850 },
+  "2": { name: "SHELLA", image: require("../../assets/bar.png"), pricePerKg: 480 },
+  "3": { name: "KARUPU VAVVAL", image: require("../../assets/black-promfet.png"), pricePerKg: 520 },
+  "4": { name: "VELLAI VAVAAL", image: require("../../assets/wpomfret.png"), pricePerKg: 560 },
+  "5": { name: "SUURAI", image: require("../../assets/tuna.png"), pricePerKg: 420 },
+  "6": { name: "PAARAI", image: require("../../assets/parai.png"), pricePerKg: 500 },
+
+  // Shrimp
+  "shrimp-1": { name: "JUMBO SHRIMP", image: require("../../assets/whiteprawn.png"), pricePerKg: 780 },
+  "shrimp-2": { name: "MEDIUM SHRIMP", image: require("../../assets/orangeprawn.png"), pricePerKg: 600 },
+  "shrimp-3": { name: "WHITE SHRIMP", image: require("../../assets/tigerprawn.png"), pricePerKg: 520 },
+  "shrimp-4": { name: "TIGER PRAWN", image: require("../../assets/greenprawn.png"), pricePerKg: 890 },
+
+  //crab
+  // Shrimp
+  "crab-1": { name: "GREEN CRAB", image: require("../../assets/greencrab.png"), pricePerKg: 450 },
+  "crab-2": { name: "BLUE CRAB", image: require("../../assets/bluecrab.png"), pricePerKg: 550 },
+  "crab-3": { name: "ORANGE CRAB", image: require("../../assets/orangecrab.png"), pricePerKg: 350},
+};
+
   
   export default function FishDetail() {
     const { id } = useLocalSearchParams();
     const fishId = Array.isArray(id) ? id[0] : id ?? "";
-    const fish = fishData[fishId as keyof typeof fishData];
+    const fish = allData[fishId as keyof typeof allData];
     const router = useRouter();
   
     const [weight, setWeight] = useState("1kg");
@@ -31,10 +45,37 @@ import {
     const [quantity, setQuantity] = useState(1);
   
     const getPrice = () => {
-      const weightFactor = weight === "240g" ? 0.24 : parseFloat(weight) || 1;
+      let weightFactor = 1;
+    
+      switch (weight) {
+        case "240g":
+          weightFactor = 0.24;
+          break;
+        case "500g":
+          weightFactor = 0.5;
+          break;
+        case "750g":
+          weightFactor = 0.75;
+          break;
+        case "1kg":
+          weightFactor = 1;
+          break;
+        case "2kg":
+          weightFactor = 2;
+          break;
+        case "3kg":
+          weightFactor = 3;
+          break;
+        case "5kg":
+          weightFactor = 5;
+          break;
+        default:
+          weightFactor = 1;
+      }
+    
       return (fish.pricePerKg * weightFactor * quantity).toFixed(0);
     };
-  
+    
     if (!fish) return <Text style={{ marginTop: 100 }}>Fish not found</Text>;
   
     const weights = ["240g", "500g", "750g", "1kg", "2kg", "3kg", "5kg"];
