@@ -1,12 +1,32 @@
+import { useState } from "react";
 import { useRouter } from "expo-router";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ImageBackground } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  ImageBackground,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebaseConfig"; // ✅ your configured firebase
 
 export default function Login() {
   const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
 
-  const handleLogin = () => {
-    router.replace("/home"); // Redirect to Home after login
+  const handleLogin = async () => {
+    try {
+      setErrorMsg(""); // Clear previous error
+      await signInWithEmailAndPassword(auth, email, password);
+      router.replace("/home");
+    } catch (error: any) {
+      console.error("Login error:", error.message);
+      setErrorMsg("Invalid email or password. Please try again.");
+    }
   };
 
   return (
@@ -21,13 +41,35 @@ export default function Login() {
 
           <View style={styles.inputContainer}>
             <Ionicons name="mail-outline" size={22} color="#ff4d4d" style={styles.icon} />
-            <TextInput style={styles.input} placeholder="Email" placeholderTextColor="#999" />
+            <TextInput
+              style={styles.input}
+              placeholder="Email"
+              placeholderTextColor="#999"
+              value={email}
+              onChangeText={setEmail}
+              autoCapitalize="none"
+              keyboardType="email-address"
+            />
           </View>
 
           <View style={styles.inputContainer}>
             <Ionicons name="lock-closed-outline" size={22} color="#ff4d4d" style={styles.icon} />
-            <TextInput style={styles.input} placeholder="Password" placeholderTextColor="#999" secureTextEntry />
+            <TextInput
+              style={styles.input}
+              placeholder="Password"
+              placeholderTextColor="#999"
+              secureTextEntry
+              value={password}
+              onChangeText={setPassword}
+            />
           </View>
+
+          {/* 🔴 Error Message UI */}
+          {errorMsg !== "" && (
+            <View style={styles.errorBox}>
+              <Text style={styles.errorText}>{errorMsg}</Text>
+            </View>
+          )}
 
           <TouchableOpacity style={styles.button} onPress={handleLogin}>
             <Text style={styles.buttonText}>Login</Text>
@@ -55,7 +97,7 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0,0,0,0.4)", // Dark overlay for contrast
+    backgroundColor: "rgba(0,0,0,0.4)",
   },
   container: {
     width: "85%",
@@ -99,6 +141,20 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 50,
     color: "#333",
+  },
+  errorBox: {
+    width: "100%",
+    backgroundColor: "#ffe6e6",
+    padding: 10,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: "#ff4d4d",
+    marginBottom: 10,
+  },
+  errorText: {
+    color: "#cc0000",
+    textAlign: "center",
+    fontSize: 14,
   },
   button: {
     width: "100%",

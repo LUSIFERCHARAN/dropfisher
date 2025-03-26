@@ -46,6 +46,10 @@ export default function Profile() {
     router.push("/editprofile");
   };
 
+  const navigateToWishlist = () => {
+    router.push("/wishlist");
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -80,6 +84,11 @@ export default function Profile() {
           <Ionicons name="help-circle-outline" size={24} color="#ff4d4d" />
           <Text style={styles.optionText}>Help & Support</Text>
         </TouchableOpacity>
+
+        <TouchableOpacity style={styles.optionItem} onPress={navigateToWishlist}>
+          <Ionicons name="heart-outline" size={24} color="#ff4d4d" />
+          <Text style={styles.optionText}>Wishlist</Text>
+        </TouchableOpacity>
       </View>
 
       <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
@@ -110,22 +119,85 @@ const styles = StyleSheet.create({
   header: { flexDirection: "row", alignItems: "center", marginBottom: 20 },
   backButton: { padding: 5, marginRight: 10 },
   title: { fontSize: 26, fontWeight: "bold", color: "#ff4d4d" },
-  profileCard: { backgroundColor: "#fff", alignItems: "center", padding: 20, borderRadius: 15, shadowColor: "#000", shadowOffset: { width: 0, height: 5 }, shadowOpacity: 0.2, shadowRadius: 8, elevation: 5, marginBottom: 20 },
+  profileCard: {
+    backgroundColor: "#fff",
+    alignItems: "center",
+    padding: 20,
+    borderRadius: 15,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.2,
+    shadowRadius: 8,
+    elevation: 5,
+    marginBottom: 20,
+  },
   profileImage: { width: 110, height: 110, borderRadius: 60, marginBottom: 10 },
   name: { fontSize: 22, fontWeight: "bold", color: "#333" },
   email: { fontSize: 16, color: "#666", marginBottom: 10 },
-  editProfileButton: { backgroundColor: "#ff4d4d", paddingVertical: 10, paddingHorizontal: 20, borderRadius: 8, marginTop: 10 },
+  editProfileButton: {
+    backgroundColor: "#ff4d4d",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    marginTop: 10,
+  },
   editProfileText: { color: "#fff", fontSize: 16, fontWeight: "bold" },
   optionsContainer: { marginVertical: 20 },
-  optionItem: { flexDirection: "row", alignItems: "center", padding: 15, backgroundColor: "#fff", borderRadius: 10, marginBottom: 10, shadowColor: "#000", shadowOffset: { width: 0, height: 3 }, shadowOpacity: 0.1, shadowRadius: 5, elevation: 3 },
+  optionItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 15,
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    marginBottom: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 3,
+  },
   optionText: { fontSize: 16, marginLeft: 10, color: "#333" },
-  logoutButton: { backgroundColor: "#ff4d4d", paddingVertical: 12, alignItems: "center", borderRadius: 10, marginTop: 10 },
+  logoutButton: {
+    backgroundColor: "#ff4d4d",
+    paddingVertical: 12,
+    alignItems: "center",
+    borderRadius: 10,
+    marginTop: 10,
+  },
   logoutText: { color: "#fff", fontSize: 18, fontWeight: "bold" },
-  modalContainer: { flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "rgba(0, 0, 0, 0.5)" },
-  modalContent: { backgroundColor: "#fff", padding: 20, borderRadius: 10, width: 300, alignItems: "center" },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  modalContent: {
+    backgroundColor: "#fff",
+    padding: 20,
+    borderRadius: 10,
+    width: 300,
+    alignItems: "center",
+  },
   modalText: { fontSize: 18, marginBottom: 20, color: "#333" },
-  modalButtons: { flexDirection: "row", justifyContent: "space-between", width: "100%" },
-  modalCancelButton: { backgroundColor: "#ccc", padding: 10, borderRadius: 10, flex: 1, alignItems: "center", marginRight: 10 },
-  modalConfirmButton: { backgroundColor: "#ff4d4d", padding: 10, borderRadius: 10, flex: 1, alignItems: "center" },
-  modalButtonText: { color: "#fff", fontSize: 16 }
+  modalButtons: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
+  },
+  modalCancelButton: {
+    backgroundColor: "#ccc",
+    padding: 10,
+    borderRadius: 10,
+    flex: 1,
+    alignItems: "center",
+    marginRight: 10,
+  },
+  modalConfirmButton: {
+    backgroundColor: "#ff4d4d",
+    padding: 10,
+    borderRadius: 10,
+    flex: 1,
+    alignItems: "center",
+  },
+  modalButtonText: { color: "#fff", fontSize: 16 },
 });

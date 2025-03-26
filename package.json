@@ -28,12 +28,14 @@
     "expo-haptics": "~14.0.1",
     "expo-linear-gradient": "~14.0.2",
     "expo-linking": "~7.0.5",
+    "expo-location": "~18.0.8",
     "expo-router": "~4.0.17",
     "expo-splash-screen": "~0.29.22",
     "expo-status-bar": "~2.0.1",
     "expo-symbols": "~0.2.2",
     "expo-system-ui": "~4.0.8",
     "expo-web-browser": "~14.0.2",
+    "firebase": "^11.5.0",
     "git": "^0.1.5",
     "lottie-ios": "^4.5.1",
     "lottie-react-native": "^7.2.2",
@@ -48,8 +50,7 @@
     "react-native-vector-icons": "^10.2.0",
     "react-native-video": "^6.10.2",
     "react-native-web": "~0.19.13",
-    "react-native-webview": "13.12.5",
-    "expo-location": "~18.0.8"
+    "react-native-webview": "13.12.5"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

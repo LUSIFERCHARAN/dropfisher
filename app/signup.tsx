@@ -1,9 +1,24 @@
 import { useRouter } from "expo-router";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ImageBackground } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ImageBackground, Alert } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useState } from "react";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebaseConfig";
 
 export default function SignUp() {
   const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSignUp = async () => {
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      router.replace("/home");
+    } catch (err: any) {
+      console.error("Signup error:", err.message);
+      Alert.alert("Signup Failed", err.message || "Something went wrong.");
+    }
+  };
 
   return (
     <ImageBackground
@@ -16,21 +31,30 @@ export default function SignUp() {
           <Text style={styles.tagline}>Fresh Seafood, Right at Your Doorstep</Text>
 
           <View style={styles.inputContainer}>
-            <Ionicons name="person-outline" size={22} color="#ff4d4d" style={styles.icon} />
-            <TextInput style={styles.input} placeholder="Full Name" placeholderTextColor="#999" />
-          </View>
-
-          <View style={styles.inputContainer}>
             <Ionicons name="mail-outline" size={22} color="#ff4d4d" style={styles.icon} />
-            <TextInput style={styles.input} placeholder="Email" placeholderTextColor="#999" />
+            <TextInput
+              style={styles.input}
+              placeholder="Email"
+              placeholderTextColor="#999"
+              value={email}
+              onChangeText={setEmail}
+              autoCapitalize="none"
+            />
           </View>
 
           <View style={styles.inputContainer}>
             <Ionicons name="lock-closed-outline" size={22} color="#ff4d4d" style={styles.icon} />
-            <TextInput style={styles.input} placeholder="Password" placeholderTextColor="#999" secureTextEntry />
+            <TextInput
+              style={styles.input}
+              placeholder="Password"
+              placeholderTextColor="#999"
+              value={password}
+              onChangeText={setPassword}
+              secureTextEntry
+            />
           </View>
 
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity style={styles.button} onPress={handleSignUp}>
             <Text style={styles.buttonText}>Sign Up</Text>
           </TouchableOpacity>
 
