@@ -19,7 +19,7 @@ export default function Profile() {
 
   const confirmLogout = () => {
     setModalVisible(false);
-    router.replace("/");
+    router.push("/login");
   };
 
   const closeModal = () => {
