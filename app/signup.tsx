@@ -2,7 +2,7 @@ import { useRouter } from "expo-router";
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, ImageBackground, Alert } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 import { auth } from "../firebaseConfig";
 
 export default function SignUp() {
@@ -12,8 +12,19 @@ export default function SignUp() {
 
   const handleSignUp = async () => {
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      router.replace("/home");
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      // ✅ Send email verification
+      await sendEmailVerification(user);
+
+      Alert.alert(
+        "Verify Your Email",
+        "A verification email has been sent. Please check your inbox before logging in."
+      );
+
+      router.replace("/login"); // redirect to login page
+
     } catch (err: any) {
       console.error("Signup error:", err.message);
       Alert.alert("Signup Failed", err.message || "Something went wrong.");
@@ -80,7 +91,7 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0,0,0,0.4)", // Dark overlay for contrast
+    backgroundColor: "rgba(0,0,0,0.4)",
   },
   container: {
     width: "85%",
